@@ -1,57 +1,49 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const totalScoreElement = document.getElementById('totalScore');
-    const buttonContainer = document.getElementById('buttonContainer');
-    let totalScore = 0;
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 20px;
+}
 
-    const updateTotalScore = () => {
-        totalScoreElement.textContent = `Total Score: ${totalScore}`;
-        if (totalScore < 45) {
-            totalScoreElement.classList.add('red');
-            totalScoreElement.classList.remove('green-text');
-        } else {
-            totalScoreElement.classList.add('green-text');
-            totalScoreElement.classList.remove('red');
-        }
-    };
+.score {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
 
-    const createButton = (text, clickHandler) => {
-        const button = document.createElement('button');
-        button.textContent = text;
-        button.addEventListener('click', clickHandler);
-        return button;
-    };
+#buttonContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-    for (let i = 1; i <= 7; i++) {
-        const row = document.createElement('div');
-        row.classList.add('row');
-        
-        for (let j = 1; j <= 5; j++) {
-            const button = createButton(`Verkefni ${i}.${j}`, (e) => {
-                e.target.classList.add('blue');
-            });
-            row.appendChild(button);
-        }
+.row {
+    margin-bottom: 10px;
+}
 
-        const valverkefniButton = createButton(`Valverkefni ${i}.1`, (e) => {
-            const grade = prompt("Hvað fékkstu í einkunn?");
-            if (grade) {
-                e.target.classList.add('yellow');
-                totalScore += parseFloat(grade.replace(',', '.'));
-                updateTotalScore();
-            }
-        });
-        row.appendChild(valverkefniButton);
+button {
+    margin: 5px;
+    padding: 10px;
+    font-size: 16px;
+}
 
-        const faerniprofButton = createButton(`Færnipróf ${i}`, (e) => {
-            const grade = prompt("Hvað fékkstu í einkunn?");
-            if (grade) {
-                e.target.classList.add('green');
-                totalScore += parseFloat(grade.replace(',', '.'));
-                updateTotalScore();
-            }
-        });
-        row.appendChild(faerniprofButton);
+.blue {
+    background-color: blue;
+    color: white;
+}
 
-        buttonContainer.appendChild(row);
-    }
-});
+.yellow {
+    background-color: yellow;
+    color: black;
+}
+
+.green {
+    background-color: green;
+    color: white;
+}
+
+.red {
+    color: red;
+}
+
+.green-text {
+    color: green;
+}
