@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const grade = prompt("Hvað fékkstu í einkunn?");
             if (grade) {
                 e.target.classList.add('yellow');
-                totalScore += parseFloat(grade.replace(',', '.')) * 0.1;
+                totalScore += parseFloat(grade.replace(',', '.')) / 100;
                 updateTotalScore();
             }
         });
