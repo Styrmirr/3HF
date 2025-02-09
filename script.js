@@ -1,49 +1,57 @@
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin: 20px;
-}
+document.addEventListener('DOMContentLoaded', () => {
+    const totalScoreElement = document.getElementById('totalScore');
+    const buttonContainer = document.getElementById('buttonContainer');
+    let totalScore = 0;
 
-.score {
-    font-size: 24px;
-    margin-bottom: 20px;
-}
+    const updateTotalScore = () => {
+        totalScoreElement.textContent = `Total Score: ${totalScore.toFixed(2)}`;
+        if (totalScore < 45) {
+            totalScoreElement.classList.add('red');
+            totalScoreElement.classList.remove('green-text');
+        } else {
+            totalScoreElement.classList.add('green-text');
+            totalScoreElement.classList.remove('red');
+        }
+    };
 
-#buttonContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+    const createButton = (text, clickHandler) => {
+        const button = document.createElement('button');
+        button.textContent = text;
+        button.addEventListener('click', clickHandler);
+        return button;
+    };
 
-.row {
-    margin-bottom: 10px;
-}
+    for (let i = 1; i <= 7; i++) {
+        const row = document.createElement('div');
+        row.classList.add('row');
+        
+        for (let j = 1; j <= 5; j++) {
+            const button = createButton(`Verkefni ${i}.${j}`, (e) => {
+                e.target.classList.add('blue');
+            });
+            row.appendChild(button);
+        }
 
-button {
-    margin: 5px;
-    padding: 10px;
-    font-size: 16px;
-}
+        const valverkefniButton = createButton(`Valverkefni ${i}.1`, (e) => {
+            const grade = prompt("Hvað fékkstu í einkunn?");
+            if (grade) {
+                e.target.classList.add('yellow');
+                totalScore += parseFloat(grade.replace(',', '.')) * 0.01;
+                updateTotalScore();
+            }
+        });
+        row.appendChild(valverkefniButton);
 
-.blue {
-    background-color: blue;
-    color: white;
-}
+        const faerniprofButton = createButton(`Færnipróf ${i}`, (e) => {
+            const grade = prompt("Hvað fékkstu í einkunn?");
+            if (grade) {
+                e.target.classList.add('green');
+                totalScore += parseFloat(grade.replace(',', '.')) * 0.1;
+                updateTotalScore();
+            }
+        });
+        row.appendChild(faerniprofButton);
 
-.yellow {
-    background-color: yellow;
-    color: black;
-}
-
-.green {
-    background-color: green;
-    color: white;
-}
-
-.red {
-    color: red;
-}
-
-.green-text {
-    color: green;
-}
+        buttonContainer.appendChild(row);
+    }
+});
